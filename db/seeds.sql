@@ -4,7 +4,7 @@ INSERT INTO department (name) VALUES
 ('Science'),
 ('Operations'),
 ('Medical'),
-('Security')
+('Security'),
 ('Command'),
 ('Tactical'),
 ('Navigation'),
