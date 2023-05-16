@@ -95,8 +95,8 @@ function runPrompt() {
           })
           .then((answer) => {
             db.query(
-                "INSERT INTO department (id, name) VALUES (NULL, ?)",
-              answer.newDepartment,
+              "INSERT INTO department SET ?",
+              { name: answer.newDepartment },
               (err, result) => {
                 if (err) throw err;
                 console.clear();
@@ -148,6 +148,8 @@ function runPrompt() {
           if (err) throw err;
           // new arrary of role choices
           const roleArr = results.map((role) => role.title);
+          console.log(results);
+          console.log(roleArr);
           // get all managers from employee
           //   keep in mind that if an employee is a manager themselves, then they will not have a manager, hence a null value
           db.query(
