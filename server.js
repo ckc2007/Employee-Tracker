@@ -103,36 +103,106 @@ inquirer
       case "Add a role":
         // add a role option
         inquirer
-        .prompt([
-          {
-            type: "input",
-            message: "Please enter the name of the role you want to add:",
-            name: "name",
-          },
-          {
-            type: "input",
-            message: "Please enter the salary of the role you added:",
-            name: "salary",
-          },
-          {
-            type: "input",
-            message: "Please enter the department id for the role you added:",
-            name: "department_id",
-          },
-        ])
-        .then((answers) => {
+          .prompt([
+            {
+              type: "input",
+              message: "Please enter the name of the role you want to add:",
+              name: "name",
+            },
+            {
+              type: "input",
+              message: "Please enter the salary of the role you added:",
+              name: "salary",
+            },
+            {
+              type: "input",
+              message: "Please enter the department id for the role you added:",
+              name: "department_id",
+            },
+          ])
+          .then((answers) => {
+            db.query(
+              "INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)",
+              [answers.name, answers.salary, answers.department_id],
+              (err, results) => {
+                if (err) throw err;
+                console.log("Role added successfully!");
+              }
+            );
+          });
+        break;
+      case "Add an employee":
+        // add an employee option
+        // get all roles from role
+        db.query("SELECT * FROM role", (err, results) => {
+          if (err) throw err;
+          // new arrary of role choices
+          const roleArr = results.map((role) => role.title);
+          // get all managers from employee
+          //   keep in mind that if an employee is a manager themselves, then they will not have a manager, hence a null value
           db.query(
-            "INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)",
-            [answers.name, answers.salary, answers.department_id],
+            "SELECT * FROM employee WHERE manager_id IS NULL",
             (err, results) => {
               if (err) throw err;
-              console.log("Role added successfully!");
+              // create an array of manager names
+              const managerArr = results.map(
+                (manager) => `${manager.first_name} ${manager.last_name}`
+              );
+              // prompt for input of new employee
+              inquirer
+                .prompt([
+                  // first name
+                  {
+                    type: "input",
+                    message: "What is the employee's first name?",
+                    name: "firstName",
+                  },
+                  // last name
+                  {
+                    type: "input",
+                    message: "What is the employee's last name?",
+                    name: "lastName",
+                  },
+                  // role (see above)
+                  {
+                    type: "list",
+                    message:
+                      "Please select the employees role from the follwing list:",
+                    choices: roleArr,
+                    name: "role",
+                  },
+                  // manager (see above)
+                  {
+                    type: "list",
+                    message:
+                      "Please select the employee's manager from the following list:",
+                    choices: managerArr,
+                    name: "manager",
+                  },
+                ])
+                .then((answer) => {
+                  const roleId = results[roleArr.indexOf(answer.role)].id;
+                  const managerId =
+                    results[managerArr.indexOf(answer.manager)].id;
+
+                  // add new employee to employee
+                  db.query(
+                    "INSERT INTO employee SET ?",
+                    {
+                      first_name: answer.firstName,
+                      last_name: answer.lastName,
+                      role_id: roleId,
+                      manager_id: managerId,
+                    },
+                    (err) => {
+                      if (err) throw err;
+                      console.log("Employee added to the database!");
+                    }
+                  );
+                });
             }
           );
         });
-      break;
-      case "Add an employee":
-        // add an employee option
         break;
       case "Update an employee role":
         // update an employee role option
