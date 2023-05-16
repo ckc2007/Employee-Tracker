@@ -1,3 +1,8 @@
+// TO DO:
+// getting error on adding info - find a way to create uniqu ids - use uuid
+// debug new employee, update employee, new info etc
+// do sample video
+
 const mysql = require("mysql2");
 const inquirer = require("inquirer");
 
@@ -264,10 +269,3 @@ function runPrompt() {
   });
 }
 runPrompt();
-// app.use((req, res) => {
-//   res.status(404).end();
-// });
-
-// app.listen(PORT, () => {
-//   console.log(`Server running on port ${PORT}`);
-// });
