@@ -80,6 +80,25 @@ inquirer
         break;
       case "Add a department":
         // add a department option
+        inquirer
+          .prompt({
+            type: "input",
+            name: "newDepartment",
+            message:
+              "Please enter the name of the department you woul dlike to add:",
+          })
+          .then((answer) => {
+            db.query(
+              "INSERT INTO department (name) VALUES (?)",
+              answer.newDepartment,
+              (err, result) => {
+                if (err) throw err;
+                console.log(
+                  `${answer.newDepartment} added successfully to the department table.`
+                );
+              }
+            );
+          });
         break;
       case "Add a role":
         // add a role option
