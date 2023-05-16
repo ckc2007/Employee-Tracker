@@ -95,8 +95,8 @@ function runPrompt() {
           })
           .then((answer) => {
             db.query(
-              "INSERT INTO department (name) VALUES (?)",
-              answer.newDepartment,
+              "INSERT INTO department (id, name) VALUES (?, ?)",
+              [null, answer.newDepartment],
               (err, result) => {
                 if (err) throw err;
                 console.clear();
