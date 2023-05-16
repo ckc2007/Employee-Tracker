@@ -57,7 +57,7 @@ inquirer
       case "View all roles":
         // view all roles option
         db.query(
-          "SELECT title, role.id, department.name AS department FROM role LEFT JOIN department ON role.department.id",
+          "SELECT title, role.id, department.name AS department FROM role LEFT JOIN department ON role.department.id = department.id",
           (err, results) => {
             if (err) throw err;
             console.table(results);
@@ -85,7 +85,7 @@ inquirer
             type: "input",
             name: "newDepartment",
             message:
-              "Please enter the name of the department you woul dlike to add:",
+              "Please enter the name of the department you would like to add:",
           })
           .then((answer) => {
             db.query(
