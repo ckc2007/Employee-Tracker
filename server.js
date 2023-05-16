@@ -52,7 +52,7 @@ inquirer
       case "View all roles":
         // view all roles option
         db.query(
-          "SELECT title, role.id, department.name AS department FROM role LEFT JOIN department ON role.department.id = department.id",
+          "SELECT title, role.id, department.name AS department FROM role LEFT JOIN department ON role.department_id = department.id",
           (err, results) => {
             if (err) throw err;
             console.table(results);
