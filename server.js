@@ -49,6 +49,10 @@ inquirer
     switch (response.option) {
       case "View all departments":
         // view all departments option
+        db.query("SELECT * FROM department", (err, results) => {
+          if (err) throw err;
+          console.table(results);
+        });
         break;
       case "View all roles":
         // view all roles option
