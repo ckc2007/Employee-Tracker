@@ -56,6 +56,13 @@ inquirer
         break;
       case "View all roles":
         // view all roles option
+        db.query(
+          "SELECT title, role.id, department.name AS department FROM role LEFT JOIN department ON role.department.id",
+          (err, results) => {
+            if (err) throw err;
+            console.table(results);
+          }
+        );
         break;
       case "View all employees":
         //view all employees option
