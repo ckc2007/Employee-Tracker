@@ -3,19 +3,28 @@ INSERT INTO department (name) VALUES
 ('Engineering'),
 ('Science'),
 ('Operations'),
-('Human Resources'),
-('Information Technology');
+('Medical'),
+('Security')
+('Command'),
+('Tactical'),
+('Navigation'),
+('Diplomacy');
 
 -- Roles
 INSERT INTO role (title, salary, department_id) VALUES
-('Chief Exec', 200000, 1),
-('Chief Tech', 180000, 1),
-('Senior Engineer', 120000, 1),
-('Junior Engineer', 80000, 1);
+('Captain', 80000, 1),
+('First Officer', 70000, 1),
+('Chief Engineer', 65000, 1),
+('Science Officer', 65000, 1),
+('Security Chief', 65000, 1),
+('Helmsman', 30000, 1),
+('Tactical Officer', 35000, 1),
+('Communications Officer', 25000, 1),
+('Diplomatic Officer', 120000, 1);
 
 -- Employees
 INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES
-('John', 'Doe', 1, NULL),
-('Jane', 'Smith', 2, 1),
-('Mark', 'Johnson', 3, 2),
-('Samantha', 'Lee', 3, 2);
+('Jack', 'Sparrow', 1, NULL),
+('Mr.', 'Spock', 2, 1),
+('William', 'Riker', 3, 2),
+('Jadzia', 'Dax', 3, 2);
