@@ -102,7 +102,35 @@ inquirer
         break;
       case "Add a role":
         // add a role option
-        break;
+        inquirer
+        .prompt([
+          {
+            type: "input",
+            message: "Please enter the name of the role you want to add:",
+            name: "name",
+          },
+          {
+            type: "input",
+            message: "Please enter the salary of the role you added:",
+            name: "salary",
+          },
+          {
+            type: "input",
+            message: "Please enter the department id for the role you added:",
+            name: "department_id",
+          },
+        ])
+        .then((answers) => {
+          db.query(
+            "INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)",
+            [answers.name, answers.salary, answers.department_id],
+            (err, results) => {
+              if (err) throw err;
+              console.log("Role added successfully!");
+            }
+          );
+        });
+      break;
       case "Add an employee":
         // add an employee option
         break;
