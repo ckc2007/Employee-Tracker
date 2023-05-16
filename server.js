@@ -22,8 +22,9 @@ db.connect((err) => {
   console.log("Connected to MySQL server.");
 });
 
-inquirer
-  .createPromptModule([
+const prompt = inquirer.createPromptModule();
+
+prompt([
     {
       type: "list",
       name: "option",
