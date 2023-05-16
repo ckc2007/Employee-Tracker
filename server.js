@@ -22,6 +22,11 @@ const db = mysql.createConnection(
   console.log(`Connected to the hr_db database.`)
 );
 
+db.connect((err) => {
+  if (err) throw err;
+  console.log("Connected to MySQL server.");
+});
+
 inquirer
   .createPromptModule([
     {
@@ -72,7 +77,7 @@ inquirer
     }
   });
 
-  // Query database using SUM(), MAX(), MIN() AVG() and GROUP BY
+// Query database using SUM(), MAX(), MIN() AVG() and GROUP BY
 // db.query('SELECT SUM(quantity) AS total_in_section, MAX(quantity) AS max_quantity, MIN(quantity) AS min_quantity, AVG(quantity) AS avg_quantity FROM favorite_books GROUP BY section', function (err, results) {
 //     console.log(results);
 //   });
