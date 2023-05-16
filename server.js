@@ -24,6 +24,7 @@ const db = mysql.createConnection(
 db.connect((err) => {
   if (err) throw err;
   console.log("Connected to MySQL server.");
+  runPrompt();
 });
 
 const prompt = inquirer.createPromptModule();
@@ -148,8 +149,8 @@ function runPrompt() {
           if (err) throw err;
           // new arrary of role choices
           const roleArr = results.map((role) => role.title);
-          console.log(results);
-          console.log(roleArr);
+        //   console.log(results);
+        //   console.log(roleArr);
           // get all managers from employee
           //   keep in mind that if an employee is a manager themselves, then they will not have a manager, hence a null value
           db.query(
@@ -193,8 +194,8 @@ function runPrompt() {
                   },
                 ])
                 .then((answer) => {
-                  console.log(roleArr.indexOf(answer.role));
-                  console.log(managerResults[roleArr.indexOf(answer.role)]);
+                //   console.log(roleArr.indexOf(answer.role));
+                //   console.log(managerResults[roleArr.indexOf(answer.role)]);
                   const roleId =
                     results[roleArr.indexOf(answer.role)].department_id;
                   const managerId =
@@ -287,4 +288,4 @@ function runPrompt() {
     }
   });
 }
-runPrompt();
+// runPrompt();
