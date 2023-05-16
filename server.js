@@ -205,21 +205,46 @@ inquirer
         });
         break;
       case "Update an employee role":
-        // update an employee role option
-        break;
-      case "Exit":
-        // exit option
-        break;
-      default:
-        console.log(`Invalid option: ${answer.option}`);
+        // list all employees in an array
+        db.query("SELECT * FROM employee", (err, results) => {
+          if (err) throw err;
+          // new array
+          const employeeArr = results.map(
+            (employee) => `${employee.first_name} ${employee.last_name}`
+          );
+          // select the employee to update
+          inquirer
+            .prompt([
+              {
+                type: "list",
+                message: "Please select an employee to update:",
+                choices: employeeArr,
+                name: "employee",
+              },
+              {
+                type: "input",
+                message: "Pleas enter the employee's new role ID:",
+                name: "role_id",
+              },
+            ])
+            .then((answer) => {
+              // get the employees id based on the selection
+              const employeeId =
+                results[employeeArr.indexOf(answer.employee)].id;
+              // update the employee role in employee table
+              db.query(
+                "UPDATE employee SET role_id = ? WHERE id = ?",
+                [answer.role_id, employeeId],
+                (err) => {
+                  if (err) throw err;
+                  console.log("Employee role updated successfully!");
+                }
+              );
+            });
+        });
         break;
     }
   });
-
-// Query database using SUM(), MAX(), MIN() AVG() and GROUP BY
-// db.query('SELECT SUM(quantity) AS total_in_section, MAX(quantity) AS max_quantity, MIN(quantity) AS min_quantity, AVG(quantity) AS avg_quantity FROM favorite_books GROUP BY section', function (err, results) {
-//     console.log(results);
-//   });
 
 app.use((req, res) => {
   res.status(404).end();
