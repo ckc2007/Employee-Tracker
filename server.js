@@ -254,9 +254,11 @@ function runPrompt() {
         break;
       case "Exit":
         // handle exit option
+        process.exit();
         break;
       default:
         console.log(`Invalid option: ${answer.option}`);
+        runPrompt();
         break;
     }
   });
