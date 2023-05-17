@@ -1,20 +1,11 @@
-// TO DO:
-// getting error on adding info - find a way to create uniqu ids - use uuid
-// debug new employee, update employee, new info etc
-// do sample video
-
 const mysql = require("mysql2");
 const inquirer = require("inquirer");
-
-const PORT = process.env.PORT || 3001;
 
 // Connect to database
 const db = mysql.createConnection(
   {
     host: "localhost",
-    // MySQL Username
     user: "root",
-    // TODO: Add MySQL Password
     password: "",
     database: "hr_db",
   },
@@ -32,9 +23,9 @@ const prompt = inquirer.createPromptModule();
 function runPrompt() {
   prompt([
     {
-      type: "list",
       name: "option",
       message: "what would you like to do?",
+      type: "list",
       choices: [
         "View all departments",
         "View all roles",
@@ -48,8 +39,8 @@ function runPrompt() {
     },
   ]).then((response) => {
     switch (response.option) {
+      // view all departments option
       case "View all departments":
-        // view all departments option
         db.query("SELECT * FROM department", (err, results) => {
           if (err) throw err;
           console.clear();
@@ -57,8 +48,8 @@ function runPrompt() {
           runPrompt();
         });
         break;
+      // view all roles option
       case "View all roles":
-        // view all roles option
         db.query(
           "SELECT title, role.id, department.name AS department FROM role LEFT JOIN department ON role.department_id = department.id",
           (err, results) => {
@@ -69,8 +60,8 @@ function runPrompt() {
           }
         );
         break;
+      //view all employees option
       case "View all employees":
-        //view all employees option
         db.query(
           "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager " +
             "FROM employee " +
@@ -85,14 +76,14 @@ function runPrompt() {
           }
         );
         break;
+      // add a department option
       case "Add a department":
-        // add a department option
         inquirer
           .prompt({
-            type: "input",
             name: "newDepartment",
             message:
               "Please enter the name of the department you would like to add:",
+            type: "input",
           })
           .then((answer) => {
             db.query(
@@ -109,24 +100,24 @@ function runPrompt() {
             );
           });
         break;
+      // add a role option
       case "Add a role":
-        // add a role option
         inquirer
           .prompt([
             {
-              type: "input",
-              message: "Please enter the name of the role you want to add:",
               name: "name",
+              message: "Please enter the name of the role you want to add:",
+              type: "input",
             },
             {
-              type: "input",
-              message: "Please enter the salary of the role you added:",
               name: "salary",
+              message: "Please enter the salary of the role you added:",
+              type: "input",
             },
             {
-              type: "input",
-              message: "Please enter the department id for the role you added:",
               name: "department_id",
+              message: "Please enter the department id for the role you added:",
+              type: "input",
             },
           ])
           .then((answers) => {
@@ -142,15 +133,15 @@ function runPrompt() {
             );
           });
         break;
+      // add an employee option
       case "Add an employee":
-        // add an employee option
         // get all roles from role
-        db.query("SELECT * FROM role", (err, results) => {
+        db.query("SELECT * FROM role", (err, roleResults) => {
           if (err) throw err;
           // new arrary of role choices
-          const roleArr = results.map((role) => role.title);
-        //   console.log(results);
-        //   console.log(roleArr);
+          const roleArr = roleResults.map((role) => role.title);
+          //   console.log(results);
+          //   console.log(roleArr);
           // get all managers from employee
           //   keep in mind that if an employee is a manager themselves, then they will not have a manager, hence a null value
           db.query(
@@ -166,38 +157,38 @@ function runPrompt() {
                 .prompt([
                   // first name
                   {
-                    type: "input",
-                    message: "What is the employee's first name?",
                     name: "firstName",
+                    message: "What is the employee's first name?",
+                    type: "input",
                   },
                   // last name
                   {
-                    type: "input",
-                    message: "What is the employee's last name?",
                     name: "lastName",
+                    message: "What is the employee's last name?",
+                    type: "input",
                   },
                   // role (see above)
                   {
-                    type: "list",
+                    name: "role",
                     message:
                       "Please select the employees role from the follwing list:",
+                    type: "list",
                     choices: roleArr,
-                    name: "role",
                   },
                   // manager (see above)
                   {
-                    type: "list",
+                    name: "manager",
                     message:
                       "Please select the employee's manager from the following list:",
+                    type: "list",
                     choices: managerArr,
-                    name: "manager",
                   },
                 ])
                 .then((answer) => {
-                //   console.log(roleArr.indexOf(answer.role));
-                //   console.log(managerResults[roleArr.indexOf(answer.role)]);
+                  //   console.log(roleArr.indexOf(answer.role));
+                  //   console.log(managerResults[roleArr.indexOf(answer.role)]);
                   const roleId =
-                    results[roleArr.indexOf(answer.role)].department_id;
+                    roleResults[roleArr.indexOf(answer.role)].department_id;
                   const managerId =
                     managerResults[managerArr.indexOf(answer.manager)].id;
 
@@ -224,19 +215,19 @@ function runPrompt() {
         break;
       case "Update an employee role":
         // Retrieve roles from the role table
-        db.query("SELECT * FROM role", (err, results) => {
+        db.query("SELECT * FROM role", (err, roleResults) => {
           if (err) throw err;
           // Create an array of role choices with role name and ID
-          const roleChoices = results.map((role) => ({
+          const roleChoices = roleResults.map((role) => ({
             name: `${role.title} (ID: ${role.id})`,
             value: role.id,
           }));
 
           // List all employees in an array
-          db.query("SELECT * FROM employee", (err, results) => {
+          db.query("SELECT * FROM employee", (err, employeeResults) => {
             if (err) throw err;
             // New array of employee choices
-            const employeeArr = results.map(
+            const employeeArr = employeeResults.map(
               (employee) => `${employee.first_name} ${employee.last_name}`
             );
 
@@ -244,22 +235,22 @@ function runPrompt() {
             inquirer
               .prompt([
                 {
-                  type: "list",
-                  message: "Please select an employee to update:",
-                  choices: employeeArr,
                   name: "employee",
+                  message: "Please select an employee to update:",
+                  type: "list",
+                  choices: employeeArr,
                 },
                 {
-                  type: "list",
-                  message: "Please select the employee's new role:",
-                  choices: roleChoices,
                   name: "role_id",
+                  message: "Please select the employee's new role:",
+                  type: "list",
+                  choices: roleChoices,
                 },
               ])
               .then((answer) => {
                 // Get the employee's ID based on the selection
                 const employeeId =
-                  results[employeeArr.indexOf(answer.employee)].id;
+                  employeeResults[employeeArr.indexOf(answer.employee)].id;
 
                 // Update the employee role in the employee table
                 db.query(
@@ -288,4 +279,3 @@ function runPrompt() {
     }
   });
 }
-// runPrompt();
