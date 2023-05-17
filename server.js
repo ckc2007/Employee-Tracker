@@ -51,7 +51,7 @@ function runPrompt() {
       // view all roles option
       case "View all roles":
         db.query(
-          "SELECT title, role.id, department.name AS department FROM role LEFT JOIN department ON role.department_id = department.id",
+          "SELECT title, role.id, department.name AS department,role.salary FROM role LEFT JOIN department ON role.department_id = department.id",
           (err, results) => {
             if (err) throw err;
             console.clear();
