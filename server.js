@@ -41,7 +41,7 @@ function runPrompt() {
     switch (response.option) {
       // view all departments option
       case "View all departments":
-        db.query("SELECT * FROM department", (err, results) => {
+        db.query("SELECT id, name AS department FROM department", (err, results) => {
           if (err) throw err;
           console.clear();
           console.table(results);
@@ -63,7 +63,7 @@ function runPrompt() {
       //view all employees option
       case "View all employees":
         db.query(
-          "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager " +
+          "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager " +
             "FROM employee " +
             "LEFT JOIN role ON employee.role_id = role.id " +
             "LEFT JOIN department ON role.department_id = department.id " +
