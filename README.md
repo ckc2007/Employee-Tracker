@@ -20,27 +20,37 @@ A command-line application that manages a company (or starship's) employee datab
 
 ## Installation
 
-First, be sure to open the .sql files in your command line. run 'mysql' (or 'mysql -u root' if there is no password, or 'mysql -u root -p' if you have a password enabled). Next, run 'SOURCE schema.sql;' to import the database structure, then run 'SOURCE seeds.sql;' to import the seed data provided by the developer. Please note, that the source.sql file includes a command to DROP DATABASE IF EXISTS books_db; which will clear any previous instances of the hr_db database. Be sure to remove this line if you want to perpetuate this database. Next, exit mysql and open the server.js file in the command line. run 'npm i' to install all dependencies and then run 'npm start' to initate the program.
+- First, be sure to open the .sql files in your command line.
+- Run 'mysql' (or 'mysql -u root' if there is no password, or 'mysql -u root -p' if you have a password enabled).
+- Next, run 'SOURCE schema.sql;' to import the database structure, then run 'SOURCE seeds.sql;' to import the seed data provided by the developer.
+- Please note, that the source.sql file includes a command to DROP DATABASE IF EXISTS books_db; which will clear any previous instances of the hr_db database. Be sure to remove this line if you want to perpetuate this database.
+- Next, exit mysql and open the server.js file in the command line. run 'npm i' to install all dependencies and then
+- Run 'npm start' to initate the program.
 
 ## Usage
 
-Once the program is running in the command line, you can navigate up and down the options menu using the up and down arrow keys. Hit enter to select an option. The on screen instructions will guide the user to enter the required data or make the required selections to update the database.
+- Once the program is running in the command line, you can navigate up and down the options menu using the up and down arrow keys.
+- Hit enter to select an option. The on-screen instructions will guide the user to enter the required data or make the required selections to update the database.
 
 ## Screenshot / Video
 
-![screenshot](./assets/images/screenshot.png)
-![A command line application that manages a company database of employees, roles and salaries](This is a command line application, and is not deployed to a server. Please run in the terminal "A command line application that manages a company database of employees, roles and salaries")
+View Departments:
+![screenshot](./assets/screenshot-01.png)
+View Roles:
+![screenshot](./assets/screenshot-02.png)
+View Employees:
+![screenshot](./assets/screenshot-03.png)
+
+Video link: [https://drive.google.com/file/d/1uZzej9w-gKzUdAwt6r1KquJNaEb0F2as/view]
 
 ## Contributing
 
-This project was built in collaboration with none,
-whose GitHub profile can be found [here](none).
-
 Third party assets used in this project include:
 MySQL: https://www.mysql.com/
+Inquirer: https://www.npmjs.com/package/inquirer
 
 Tutorials used in this project include:
-Getting Started with MySQL: https://dev.mysql.com/doc/mysql-getting-started/en/
+"Getting Started with MySQL": https://dev.mysql.com/doc/mysql-getting-started/en/
 
 ## License
 
@@ -52,7 +62,7 @@ Command-line application using Node.js, SQL and the Inquirer npm.
 
 ## Tests
 
-None
+None at this time.
 
 ## Questions
 
