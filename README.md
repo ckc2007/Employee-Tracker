@@ -6,10 +6,10 @@ A command-line application that manages a company (or starship's) employee datab
 
 ## Description
 
-- This data-management tool enables the user to quickly navigate through tables describing job titles, employee names, salaries, and departments without the need for spreadsheets. Data can be added, deleted or modified based on command-line prompts. .
+- This data-management tool enables the user to quickly navigate through tables describing job titles, employee names, salaries, and departments without the need for spreadsheets. Data can be added, deleted or modified based on command-line prompts.
 - When dealing with complex hiring structures or constant turnover, this application will server the user well by simplifying the task of updating the employee database with just a few clicks.
-- This project will enable the user to maintain an organized database of all employees and their roles within the company, while giving them control over the task of updating this information quickly from the command-line. In short, it will save time and keep things organized..
-- In developing this project, the devs learned the importance of keeping a well-structured SQL database. Keeping data structured and well-connected means the user will have a much easier time of updating and manipulating this data later on..
+- This project will enable the user to maintain an organized database of all employees and their roles within the company, while giving them control over the task of updating this information quickly from the command-line. In short, it will save time and keep things organized.
+- In developing this project, the devs learned the importance of keeping a well-structured SQL database. Keeping data structured and well-connected means the user will have a much easier time of updating and manipulating this data later on.
 
 ## Table Of Contents
 
