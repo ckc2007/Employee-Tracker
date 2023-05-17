@@ -36,8 +36,10 @@ A command-line application that manages a company (or starship's) employee datab
 
 View Departments:
 ![screenshot](./assets/screenshot-01.png)
+
 View Roles:
 ![screenshot](./assets/screenshot-02.png)
+
 View Employees:
 ![screenshot](./assets/screenshot-03.png)
 
