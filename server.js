@@ -41,12 +41,15 @@ function runPrompt() {
     switch (response.option) {
       // view all departments option
       case "View all departments":
-        db.query("SELECT id, name AS department FROM department", (err, results) => {
-          if (err) throw err;
-          console.clear();
-          console.table(results);
-          runPrompt();
-        });
+        db.query(
+          "SELECT id, name AS department FROM department",
+          (err, results) => {
+            if (err) throw err;
+            console.clear();
+            console.table(results);
+            runPrompt();
+          }
+        );
         break;
       // view all roles option
       case "View all roles":
@@ -102,36 +105,46 @@ function runPrompt() {
         break;
       // add a role option
       case "Add a role":
-        inquirer
-          .prompt([
-            {
-              name: "name",
-              message: "Please enter the name of the role you want to add:",
-              type: "input",
-            },
-            {
-              name: "salary",
-              message: "Please enter the salary of the role you added:",
-              type: "input",
-            },
-            {
-              name: "department_id",
-              message: "Please enter the department id for the role you added:",
-              type: "input",
-            },
-          ])
-          .then((answers) => {
-            db.query(
-              "INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)",
-              [answers.name, answers.salary, answers.department_id],
-              (err, results) => {
-                if (err) throw err;
-                console.clear();
-                console.log("Role added successfully!");
-                runPrompt();
-              }
-            );
-          });
+        db.query("SELECT * FROM department", (err, results) => {
+          if (err) throw err;
+          const departments = results.map((department) => ({
+            name: department.name,
+            value: department.id,
+          }));
+
+          inquirer
+            .prompt([
+              {
+                name: "name",
+                message: "Please enter the name of the role you want to add:",
+                type: "input",
+              },
+              {
+                name: "salary",
+                message: "Please enter the salary of the role you added:",
+                type: "input",
+              },
+              {
+                name: "department_id",
+                message:
+                  "Please select the department for the role you added:",
+                type: "list",
+                choices: departments,
+              },
+            ])
+            .then((answers) => {
+              db.query(
+                "INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)",
+                [answers.name, answers.salary, answers.department_id],
+                (err, results) => {
+                  if (err) throw err;
+                  console.clear();
+                  console.log("Role added successfully!");
+                  runPrompt();
+                }
+              );
+            });
+        });
         break;
       // add an employee option
       case "Add an employee":
