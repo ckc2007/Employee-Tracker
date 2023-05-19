@@ -46,6 +46,10 @@ View Employees:
 
 ![screenshot](./assets/screenshot-03.png)
 
+View By Manager & View Department Budget:
+
+![screenshot](./assets/screenshot-04.png)
+
 Video link: [https://drive.google.com/file/d/1uZzej9w-gKzUdAwt6r1KquJNaEb0F2as/view]
 
 ## Contributing
